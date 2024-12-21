@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 
-const mockTasks = [
-  { id: 'task-1', title: 'Set up project structure', status: 'To Do' },
-  { id: 'task-2', title: 'Design Kanban layout', status: 'In Progress' },
-  { id: 'task-3', title: 'Implement drag-and-drop', status: 'In Progress' },
-  { id: 'task-4', title: 'Test functionality', status: 'Done' },
-];
-
 const App = () => {
-  const [tasks, setTasks] = useState(mockTasks);
+  
+  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
+
+ 
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
+
+  
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleAddTask = () => {
     if (newTask.trim() === '') return;
