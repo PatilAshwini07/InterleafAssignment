@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const mockTasks = [
   { id: 'task-1', title: 'Set up project structure', status: 'To Do' },
@@ -15,7 +16,7 @@ const App = () => {
   const handleAddTask = () => {
     if (newTask.trim() === '') return;
     const newTaskObj = {
-      id: `task-${tasks.length + 1}`,
+      id: uuidv4(),
       title: newTask,
       status: 'To Do',
     };
